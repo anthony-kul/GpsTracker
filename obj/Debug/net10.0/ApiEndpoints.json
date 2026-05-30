@@ -1,0 +1,22 @@
+[
+  {
+    "ContainingType": "GpsTrackerApi.Controllers.GpsController",
+    "Method": "FetchLocation",
+    "RelativePath": "api/Gps/fetch-location",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GpsTrackerApi.Controllers.GpsController",
+    "Method": "GetLocation",
+    "RelativePath": "api/Gps/get-location",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

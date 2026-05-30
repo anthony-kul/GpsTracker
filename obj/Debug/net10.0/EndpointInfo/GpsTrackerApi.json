@@ -1,0 +1,39 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "GpsTrackerApi",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Gps/fetch-location": {
+      "post": {
+        "tags": [
+          "Gps"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Gps/get-location": {
+      "get": {
+        "tags": [
+          "Gps"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { },
+  "tags": [
+    {
+      "name": "Gps"
+    }
+  ]
+}
