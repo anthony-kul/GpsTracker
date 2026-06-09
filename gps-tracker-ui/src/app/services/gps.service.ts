@@ -12,7 +12,7 @@ export interface LocationResponse {
   providedIn: 'root'
 })
 export class GpsService {
-  private apiUrl = 'https://localhost:7082/api/Gps';
+  private apiUrl = 'http://localhost:5011/api/Gps';
 
   constructor(private http: HttpClient) { }
 
