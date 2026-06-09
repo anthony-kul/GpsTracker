@@ -1,0 +1,34 @@
+<div class="layout-container">
+  
+  <div class="sidebar">
+    <div class="header">
+      <h2>Live Fleet Tracking</h2>
+    </div>
+
+    <div class="controls">
+      <button 
+        class="btn btn-primary" 
+        (click)="fetchNewLocation()" 
+        [disabled]="isFetching">
+        <span *ngIf="!isFetching">Fetch Live Data</span>
+        <span *ngIf="isFetching">Syncing...</span>
+      </button>
+
+      <button 
+        class="btn btn-secondary" 
+        (click)="getLastKnownLocation()" 
+        [disabled]="isFetching">
+        Plot Last Location
+      </button>
+    </div>
+
+    <div class="status-indicator" *ngIf="statusMessage" [class.success]="isSuccess">
+      {{ statusMessage }}
+    </div>
+  </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+
+</div>
