@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 export interface LocationResponse {
   message?: string;
@@ -12,15 +13,32 @@ export interface LocationResponse {
   providedIn: 'root'
 })
 export class GpsService {
-  private apiUrl = 'http://localhost:5011/api/Gps';
+  private apiUrl = 'https://app.gpstrack.in/api/get_current_data?token=cqzFZ57r1rLz9G7YQRzn5RQtflKLum5H&email=pragasam1016@gmail.com';
+  private lastLocationData: any = null;
 
   constructor(private http: HttpClient) { }
 
   fetchLocation(): Observable<LocationResponse> {
-    return this.http.post<LocationResponse>(`${this.apiUrl}/fetch-location`, {});
+    return this.http.get<any>(this.apiUrl).pipe(
+      tap(data => {
+        this.lastLocationData = data;
+      }),
+      map(data => ({
+        message: 'Location fetched successfully',
+        data: JSON.stringify(data)
+      }))
+    );
   }
 
   getLocation(): Observable<LocationResponse> {
-    return this.http.get<LocationResponse>(`${this.apiUrl}/get-location`);
+    if (this.lastLocationData) {
+      return of({
+        location: JSON.stringify(this.lastLocationData)
+      });
+    } else {
+      return of({
+        location: ''
+      });
+    }
   }
 }
