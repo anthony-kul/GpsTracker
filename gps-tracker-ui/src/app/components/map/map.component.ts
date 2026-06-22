@@ -29,6 +29,7 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements OnInit, OnDestroy {
   private map: L.Map | undefined;
   private marker: L.Marker | undefined;
+  private refreshInterval: any;
   
   statusMessage = '';
   isFetching = false;
@@ -39,12 +40,23 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initMap();
+    this.startAutoRefresh();
   }
 
   ngOnDestroy(): void {
     if (this.map) {
       this.map.remove();
     }
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
+  }
+
+  private startAutoRefresh(): void {
+    this.fetchNewLocation();
+    this.refreshInterval = setInterval(() => {
+      this.fetchNewLocation();
+    }, 30000);
   }
 
   private initMap(): void {
@@ -69,9 +81,20 @@ export class MapComponent implements OnInit, OnDestroy {
     
     this.gpsService.fetchLocation().subscribe({
       next: (response) => {
-        // ONLY fetch the location and show a success message. Do NOT plot.
-        this.statusMessage = response.message || 'Location fetched successfully!';
-        this.isSuccess = true;
+        if (response.data) {
+          try {
+            this.locationData = JSON.parse(response.data);
+            this.updateMapWithLocation();
+            this.statusMessage = 'Live data synced successfully.';
+            this.isSuccess = true;
+          } catch(e) {
+            this.statusMessage = 'Failed to parse location data';
+            this.isSuccess = false;
+          }
+        } else {
+          this.statusMessage = response.message || 'Location fetched successfully!';
+          this.isSuccess = true;
+        }
         this.isFetching = false;
       },
       error: (err) => {

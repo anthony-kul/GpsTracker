@@ -6,13 +6,8 @@
     </div>
 
     <div class="controls">
-      <button 
-        class="btn btn-primary" 
-        (click)="fetchNewLocation()" 
-        [disabled]="isFetching">
-        <span *ngIf="!isFetching">Fetch Live Data</span>
-        <span *ngIf="isFetching">Syncing...</span>
-      </button>
+      <!-- Auto-refresh active -->
+      <p style="font-size: 0.9em; color: #555;">Auto-syncing every 30s</p>
 
       <button 
         class="btn btn-secondary" 
